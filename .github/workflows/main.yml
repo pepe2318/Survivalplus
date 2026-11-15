@@ -1,3 +1,4 @@
+
 name: Build SurvivalPlus
 
 on:
@@ -21,5 +22,12 @@ jobs:
       - name: Extraer código fuente
         run: unzip -o SurvivalPlus-source-alpha.zip -d .
 
-      - name: Compilar mod
-        run: gradle -p SurvivalPlus build
+      - name: Buscar proyecto Gradle y compilar
+        run: |
+          PROJECT_DIR=$(find . -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit | xargs -r dirname)
+          if [ -z "$PROJECT_DIR" ]; then
+            echo "No se encontró settings.gradle en el ZIP"
+            exit 1
+          fi
+          echo "Proyecto encontrado en: $PROJECT_DIR"
+          gradle -p "$PROJECT_DIR" build
