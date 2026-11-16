@@ -22,8 +22,9 @@ jobs:
         run: unzip -o SurvivalPlus-source-alpha.zip -d .
 
       - name: Buscar proyecto Gradle y compilar
+        shell: bash
         run: |
-          PROJECT_DIR=$(find . -type f \\( -name settings.gradle -o -name settings.gradle.kts \\) -print -quit | xargs -r dirname)
+          PROJECT_DIR=$(find . -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit | xargs -r dirname)
           if [ -z "$PROJECT_DIR" ]; then
             echo "No se encontró settings.gradle en el ZIP"
             exit 1
